@@ -3,6 +3,7 @@ package com.gotocode.nota.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String valor;
+    private BigDecimal valor;
     private String nomeEstabelecimento;
     private String cidade;
     private String endereco;

@@ -1,8 +1,8 @@
 package com.gotocode.nota.dto;
 
 import com.gotocode.nota.entity.ItemTransaction;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import com.gotocode.nota.utils.ConvertCurrency;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -41,22 +41,22 @@ public class ItemTransactionDTO implements Serializable {
     }
 
     public void setPrecoUnitario(String precoUnitario) {
-        this.precoUnitario = new BigDecimal(precoUnitario.replace(",", "."));
+        this.precoUnitario = ConvertCurrency.convertToBigDecimal(precoUnitario);
     }
 
     public void setSubtotal(String subtotal) {
-        this.subtotal = new BigDecimal(subtotal.replace(",", "."));
+        this.subtotal = ConvertCurrency.convertToBigDecimal(subtotal);
     }
 
     public void setTaxaImposto(String taxaImposto) {
-        this.taxaImposto = new BigDecimal(taxaImposto.replace(",", "."));
+        this.taxaImposto = ConvertCurrency.convertToBigDecimal(taxaImposto);
     }
 
     public void setValorImposto(String valorImposto) {
-        this.valorImposto = new BigDecimal(valorImposto.replace(",", "."));
+        this.valorImposto = ConvertCurrency.convertToBigDecimal(valorImposto);
     }
 
     public void setPrecoTotal(String precoTotal) {
-        this.precoTotal = new BigDecimal(precoTotal.replace(",", "."));
+        this.precoTotal = ConvertCurrency.convertToBigDecimal(precoTotal);
     }
 }

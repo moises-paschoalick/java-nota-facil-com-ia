@@ -28,17 +28,17 @@ public class TransactionService {
 
         List<ItemTransaction> items = new ArrayList<>();
         for(ItemTransactionDTO itemDto: dto.getItens()) {
-            ItemTransaction item = new ItemTransaction();
-            item.setNomeProduto(itemDto.getNomeProduto());
-            item.setCodigoProduto(itemDto.getCodigoProduto());
-            item.setDescricao(itemDto.getDescricao());
-            item.setQuantidade(itemDto.getQuantidade());
-            item.setUnidade(itemDto.getUnidade());
-            item.setPrecoUnitario(itemDto.getPrecoUnitario());
-            item.setSubtotal(itemDto.getSubtotal());
-            item.setTaxaImposto(itemDto.getTaxaImposto());
-            item.setValorImposto(itemDto.getValorImposto());
-            item.setPrecoTotal(itemDto.getPrecoTotal());
+            ItemTransaction item = ItemTransaction.builder()
+                    .nomeProduto(itemDto.getNomeProduto())
+                    .codigoProduto(itemDto.getCodigoProduto())
+                    .descricao(itemDto.getDescricao())
+                    .quantidade(itemDto.getQuantidade())
+                    .unidade(itemDto.getUnidade())
+                    .precoUnitario(itemDto.getPrecoUnitario())
+                    .subtotal(itemDto.getSubtotal())
+                    .taxaImposto(itemDto.getTaxaImposto())
+                    .precoTotal(itemDto.getPrecoTotal())
+                    .build();
 
             item.setTransacao(transaction);
             items.add(item);

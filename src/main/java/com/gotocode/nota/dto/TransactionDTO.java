@@ -2,10 +2,12 @@ package com.gotocode.nota.dto;
 
 import com.gotocode.nota.entity.ItemTransaction;
 import com.gotocode.nota.entity.Transaction;
+import com.gotocode.nota.utils.ConvertCurrency;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +19,7 @@ public class TransactionDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private String valor;
+    private BigDecimal valor;
     private String nomeEstabelecimento;
     private String cidade;
     private String endereco;
@@ -44,5 +46,8 @@ public class TransactionDTO implements Serializable {
         itemTransactions.forEach(item -> this.itens.add(new ItemTransactionDTO(item)));
     }
 
+    public void setValor(String valor) {
+        this.valor = ConvertCurrency.convertToBigDecimal(valor);
+    }
 
 }
