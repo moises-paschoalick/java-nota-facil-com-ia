@@ -24,20 +24,23 @@ public class TransactionService {
     public TransactionDTO save(TransactionDTO dto) {
         Transaction transaction = new Transaction();
         transaction.setValor(dto.getValor());
+        transaction.setSubTotal(dto.getSubTotal());
+        transaction.setValorPago(dto.getValorPago());
         transaction.setNomeEstabelecimento(dto.getNomeEstabelecimento());
+
+        transaction.setQtdeTotalItens(dto.getQtdeTotalItens());
+        transaction.setChaveAcesso(dto.getChaveAcesso());
 
         List<ItemTransaction> items = new ArrayList<>();
         for(ItemTransactionDTO itemDto: dto.getItens()) {
             ItemTransaction item = ItemTransaction.builder()
-                    .nomeProduto(itemDto.getNomeProduto())
                     .codigoProduto(itemDto.getCodigoProduto())
+                    .nomeProduto(itemDto.getNomeProduto())
                     .descricao(itemDto.getDescricao())
                     .quantidade(itemDto.getQuantidade())
                     .unidade(itemDto.getUnidade())
-                    .precoUnitario(itemDto.getPrecoUnitario())
-                    .subtotal(itemDto.getSubtotal())
-                    .taxaImposto(itemDto.getTaxaImposto())
-                    .precoTotal(itemDto.getPrecoTotal())
+                    .valorUnitario(itemDto.getValorUnitario())
+                    .valorTotal(itemDto.getValorTotal())
                     .build();
 
             item.setTransacao(transaction);

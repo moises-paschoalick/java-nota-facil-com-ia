@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class TransactionController {
 
     @Autowired
-    private final TransactionService transactionService;
+    private TransactionService transactionService;
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody @Validated TransactionDTO dto, BindingResult result) {

@@ -15,48 +15,31 @@ public class ItemTransactionDTO implements Serializable {
 
     private long id;
 
-    private String nomeProduto;
     private String codigoProduto;
+    private String nomeProduto;
     private String descricao;
     private String quantidade;
     private String unidade;
-    private BigDecimal precoUnitario;
-    private BigDecimal subtotal;
-    private BigDecimal taxaImposto;
-    private BigDecimal valorImposto;
-    private BigDecimal precoTotal;
-
+    private BigDecimal valorUnitario;
+    private BigDecimal valorTotal;
 
     public ItemTransactionDTO(ItemTransaction entity) {
         id = entity.getId();
+        codigoProduto = entity.getCodigoProduto();
         nomeProduto = entity.getNomeProduto();
         descricao = entity.getDescricao();
         quantidade = entity.getQuantidade();
         unidade = entity.getUnidade();
-        precoUnitario = entity.getPrecoUnitario();
-        subtotal = entity.getSubtotal();
-        taxaImposto = entity.getTaxaImposto();
-        valorImposto = entity.getValorImposto();
-        precoTotal = entity.getPrecoTotal();
+        valorUnitario = entity.getValorUnitario();
+        valorTotal = entity.getValorTotal();
     }
 
-    public void setPrecoUnitario(String precoUnitario) {
-        this.precoUnitario = ConvertCurrency.convertToBigDecimal(precoUnitario);
+    public void setValorUnitario(String valorUnitario) {
+        this.valorUnitario = ConvertCurrency.convertToBigDecimal(valorUnitario);
     }
 
     public void setSubtotal(String subtotal) {
-        this.subtotal = ConvertCurrency.convertToBigDecimal(subtotal);
+        this.valorTotal = ConvertCurrency.convertToBigDecimal(subtotal);
     }
 
-    public void setTaxaImposto(String taxaImposto) {
-        this.taxaImposto = ConvertCurrency.convertToBigDecimal(taxaImposto);
-    }
-
-    public void setValorImposto(String valorImposto) {
-        this.valorImposto = ConvertCurrency.convertToBigDecimal(valorImposto);
-    }
-
-    public void setPrecoTotal(String precoTotal) {
-        this.precoTotal = ConvertCurrency.convertToBigDecimal(precoTotal);
-    }
 }

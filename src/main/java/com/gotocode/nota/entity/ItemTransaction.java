@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "item_transaction")
 public class ItemTransaction {
 
     @Id
@@ -23,15 +24,11 @@ public class ItemTransaction {
     @JoinColumn(name = "transacao_id", nullable = false)
     private Transaction transacao;
 
-    private String nomeProduto;
     private String codigoProduto;
+    private String nomeProduto;
     private String descricao;
     private String quantidade;
     private String unidade;
-    private BigDecimal precoUnitario;
-    private BigDecimal subtotal;
-    private BigDecimal taxaImposto;
-    private BigDecimal valorImposto;
-    private BigDecimal precoTotal;
-
+    private BigDecimal valorUnitario;
+    private BigDecimal valorTotal;
 }
