@@ -2,14 +2,16 @@ package com.gotocode.nota.services;
 
 import com.gotocode.nota.dto.ItemTransactionDTO;
 import com.gotocode.nota.dto.TransactionDTO;
+import com.gotocode.nota.dto.TransactionSumDTO;
 import com.gotocode.nota.entity.ItemTransaction;
 import com.gotocode.nota.entity.Transaction;
 import com.gotocode.nota.repository.ItemRepository;
 import com.gotocode.nota.repository.TransactionRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +53,16 @@ public class TransactionService {
         transaction = transactionRepository.save(transaction);
 
         return new TransactionDTO(transaction);
+    }
+
+    @Transactional(readOnly = true)
+    public BigDecimal sumAllTransactions(){
+        return transactionRepository.sumAllTransactions();
+    }
+
+    @Transactional(readOnly = true)
+    public TransactionSumDTO sumAllTransactionsByDTO(){
+        return transactionRepository.getSumDTO();
     }
 
 }
