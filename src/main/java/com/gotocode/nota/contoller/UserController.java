@@ -15,7 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/users")
 public class UserController {
 
     @Autowired
@@ -37,6 +37,12 @@ public class UserController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
         UserDTO dto = userService.findById(id);
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @GetMapping(value = "/phone/{phoneNumber}")
+    public ResponseEntity<UserDTO> findByPhoneNumber(@PathVariable String phoneNumber) {
+        UserDTO dto = userService.findByPhoneNumber(phoneNumber);
         return ResponseEntity.ok().body(dto);
     }
 

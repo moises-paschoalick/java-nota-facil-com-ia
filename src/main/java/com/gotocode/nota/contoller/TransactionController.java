@@ -11,11 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/transaction")
+@RequestMapping(value = "/transactions")
 @RequiredArgsConstructor
 public class TransactionController {
 
@@ -33,6 +32,14 @@ public class TransactionController {
         dto = transactionService.save(dto);
         return ResponseEntity.ok().body(dto);
     }
+
+    @GetMapping
+    public ResponseEntity<List<TransactionDTO>> findAdd(){
+        // Buscar todas transações
+        List<TransactionDTO> list = transactionService.getAllTransactions();
+        return ResponseEntity.ok().body(list);
+    };
+
 
     @GetMapping(value = "/total")
     public ResponseEntity<TransactionSumDTO> getTotalAmount(){

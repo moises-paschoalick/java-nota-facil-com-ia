@@ -59,5 +59,12 @@ public class UserService {
         }
     }
 
-    
+    public UserDTO findByPhoneNumber(String phoneNumber) {
+        try {
+            User entity = userRepository.findByPhoneNumber(phoneNumber);
+            return new UserDTO(entity);
+        } catch (EntityNotFoundException | NullPointerException e) {
+            throw new ResourceNotFoundException("Not found: " + phoneNumber);
+        }
+    }
 }
