@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -21,18 +24,21 @@ public class TransactionDTO implements Serializable {
     private Long id;
 
     // Dados da transação
+    private LocalDate dataEmissao;
     private BigDecimal valor;
     private BigDecimal subTotal;
     private BigDecimal valorPago;
     private Long qtdeTotalItens;
     private String formaPagamento;
-    private BigDecimal taxaImposto;
+    private String taxaImposto; // Pode ser uma descrição
     private BigDecimal valorImposto;
     private String tributoFederal;
     private String tributoEstadual;
 
     // Dados da nota
     private String nomeEstabelecimento;
+    private String fone;
+    private String cep;
     private String cidade;
     private String endereco;
     private String cnpj;
@@ -46,6 +52,7 @@ public class TransactionDTO implements Serializable {
 
     public TransactionDTO(Transaction entity) {
         id = entity.getId();
+        this.dataEmissao = entity.getDataEmissao();
         this.valor = entity.getValor();
         this.subTotal = entity.getSubTotal();
         this.valorPago = entity.getValorPago();
@@ -57,6 +64,8 @@ public class TransactionDTO implements Serializable {
         this.tributoEstadual = entity.getTributoEstadual();
 
         this.nomeEstabelecimento = entity.getNomeEstabelecimento();
+        this.fone = entity.getFone();
+        this.cep = entity.getCep();
         this.cidade = entity.getCidade();
         this.endereco = entity.getEndereco();
         this.cnpj = entity.getCnpj();
@@ -71,6 +80,22 @@ public class TransactionDTO implements Serializable {
         itemTransactions.forEach(item -> this.itens.add(new ItemTransactionDTO(item)));
     }
 
+
+    public void setDataEmissao(String valor) {
+        if (valor == null || valor.trim().isEmpty()) {
+            this.dataEmissao = null;
+            return;
+        }
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            this.dataEmissao = LocalDate.parse(valor.toString(), formatter);
+        } catch (DateTimeParseException e) {
+            this.dataEmissao = null;
+            throw new IllegalArgumentException("Formato de data inválido. Use dd/MM/yyyy.");
+        }
+    }
+
     public void setValor(String valor) {
         this.valor = ConvertCurrency.convertToBigDecimal(valor);
     }
@@ -81,10 +106,6 @@ public class TransactionDTO implements Serializable {
 
     public void setValorPago(String valor) {
         this.valorPago = ConvertCurrency.convertToBigDecimal(valor);
-    }
-
-    public void setTaxaImposto(String taxaImposto) {
-        this.taxaImposto = ConvertCurrency.convertToBigDecimal(taxaImposto);
     }
 
     public void setValorImposto(String valorImposto) {

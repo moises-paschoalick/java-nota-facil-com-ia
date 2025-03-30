@@ -26,12 +26,30 @@ public class TransactionService {
     @Transactional
     public TransactionDTO save(TransactionDTO dto) {
         Transaction transaction = new Transaction();
+
+        // Dados da transação
+        transaction.setDataEmissao(dto.getDataEmissao());
         transaction.setValor(dto.getValor());
         transaction.setSubTotal(dto.getSubTotal());
         transaction.setValorPago(dto.getValorPago());
-        transaction.setNomeEstabelecimento(dto.getNomeEstabelecimento());
-
         transaction.setQtdeTotalItens(dto.getQtdeTotalItens());
+        transaction.setFormaPagamento(dto.getFormaPagamento());
+        // Tributos
+        transaction.setTaxaImposto(dto.getTaxaImposto());
+        transaction.setValorImposto(dto.getValorImposto());
+        transaction.setTributoEstadual(dto.getTributoEstadual());
+        transaction.setTributoFederal(dto.getTributoFederal());
+
+        // Dados do estabelecimento
+        transaction.setNomeEstabelecimento(dto.getNomeEstabelecimento());
+        transaction.setFone(dto.getFone());
+        transaction.setCep(dto.getCep());
+        transaction.setCidade(dto.getCidade());
+        transaction.setEndereco(dto.getEndereco());
+        transaction.setCnpj(dto.getCnpj());
+        transaction.setCpf(dto.getCpf());
+        transaction.setConsumidor(dto.getConsumidor());
+        transaction.setInscricaoEstadual(dto.getInscricaoEstadual());
         transaction.setChaveAcesso(dto.getChaveAcesso());
 
         List<ItemTransaction> items = new ArrayList<>();
