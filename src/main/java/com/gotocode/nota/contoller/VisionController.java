@@ -1,6 +1,5 @@
 package com.gotocode.nota.contoller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +20,14 @@ public class VisionController {
     private com.gotocode.nota.services.VisionService textractService;
 
     @PostMapping("/analyze")
-    public ResponseEntity<String> analyzeImage(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Map<String, Object>> analyzeImage(@RequestParam("file") MultipartFile file) {
         try {
-            String extractedText = textractService.analyzeImage(file);
-            //String jsonResponse = new ObjectMapper().writeValueAsString(Map.of("data", extractedText));
-            return ResponseEntity.ok().body(extractedText);
+            Map<String, Object> result = textractService.analyzeImage(file);
+            return ResponseEntity.ok(result);
         } catch (IOException e) {
             log.error("Erro ao processar imagem", e);
-            return ResponseEntity.internalServerError().body("Erro ao processar imagem");
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Erro ao processar imagem"));
         }
     }
 
