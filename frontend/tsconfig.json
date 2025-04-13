@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es2020",                        // ES2020 é mais moderno e eficiente
+    "lib": ["dom", "dom.iterable", "esnext"], 
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "baseUrl": "./src",                        // Importações absolutas (já está ótimo)
+    "allowJs": true,
+    "checkJs": false,                          // Garante que arquivos JS não sejam verificados
+    "jsx": "react-jsx",                        // Para React 17+ (ótimo!)
+    "strict": true,
+    "noImplicitAny": true,                     // Evita `any` implícito
+    "strictNullChecks": false,                  // Lida melhor com `null`/`undefined`
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "build"]
+}
