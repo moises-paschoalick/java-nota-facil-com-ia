@@ -7,9 +7,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+
+
+    @Query("SELECT obj FROM Transaction obj JOIN FETCH obj.itens WHERE obj IN :transactions")
+    List<Transaction> findTransactionsWithItens(List<Transaction> transactions);
+
+    @Query("SELECT t FROM Transaction t LEFT JOIN FETCH t.itens WHERE t.id = :id")
+    Optional<Transaction> findByItensId(Long id);
 
     @Query("SELECT SUM(t.valor) FROM Transaction t")
     BigDecimal sumAllTransactions();

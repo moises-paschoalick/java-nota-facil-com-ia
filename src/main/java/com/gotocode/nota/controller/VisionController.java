@@ -1,4 +1,4 @@
-package com.gotocode.nota.contoller;
+package com.gotocode.nota.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

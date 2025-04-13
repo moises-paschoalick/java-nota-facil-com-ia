@@ -1,4 +1,4 @@
-package com.gotocode.nota.contoller.exceptions;
+package com.gotocode.nota.controller.exceptions;
 
 import java.io.Serializable;
 import java.time.Instant;

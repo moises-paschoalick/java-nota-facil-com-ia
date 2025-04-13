@@ -14,6 +14,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @RequiredArgsConstructor
@@ -73,6 +74,11 @@ public class TransactionDTO implements Serializable {
         this.consumidor = entity.getConsumidor();
         this.inscricaoEstadual = entity.getInscricaoEstadual();
         this.chaveAcesso = entity.getChaveAcesso();
+
+        this.itens = entity.getItens().stream()
+                .map(ItemTransactionDTO::new)
+                .collect(Collectors.toList());
+
     }
 
     public TransactionDTO(Transaction entity, Set<ItemTransaction> itemTransactions) {

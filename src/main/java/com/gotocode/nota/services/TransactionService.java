@@ -7,6 +7,9 @@ import com.gotocode.nota.entity.ItemTransaction;
 import com.gotocode.nota.entity.Transaction;
 import com.gotocode.nota.repository.ItemRepository;
 import com.gotocode.nota.repository.TransactionRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -74,6 +78,12 @@ public class TransactionService {
         return new TransactionDTO(transaction);
     }
 
+    public TransactionDTO findById(Long id) {
+        Transaction transaction = transactionRepository.findByItensId(id)
+                .orElseThrow(() -> new RuntimeException("Transação não encontrada"));
+        return new TransactionDTO(transaction);
+    }
+
     @Transactional(readOnly = true)
     public BigDecimal sumAllTransactions(){
         return transactionRepository.sumAllTransactions();
@@ -84,10 +94,19 @@ public class TransactionService {
         return transactionRepository.getSumDTO();
     }
 
-    public List<TransactionDTO> getAllTransactions() {
-        List<Transaction> list = transactionRepository.findAll();
-        return list.stream()
-                .map(item -> new TransactionDTO(item))
+    @Transactional(readOnly = true)
+    public Page<TransactionDTO> getAllTransactions(Pageable pageable) {
+        Page<Transaction> page = transactionRepository.findAll(pageable);
+
+        List<Transaction> enrichedTransactions = transactionRepository.findTransactionsWithItens(page.getContent());
+
+        Map<Long, Transaction> transactionMap = enrichedTransactions.stream()
+                .collect(Collectors.toMap(Transaction::getId, t -> t));
+
+        List<TransactionDTO> dtos = page.getContent().stream()
+                .map(transaction -> new TransactionDTO(transactionMap.get(transaction.getId())))
                 .collect(Collectors.toList());
+
+        return new PageImpl<>(dtos, pageable, page.getTotalElements());
     }
 }

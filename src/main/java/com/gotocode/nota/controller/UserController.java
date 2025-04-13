@@ -1,4 +1,4 @@
-package com.gotocode.nota.contoller;
+package com.gotocode.nota.controller;
 
 
 import com.gotocode.nota.dto.UserDTO;
