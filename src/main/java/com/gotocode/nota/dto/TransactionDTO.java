@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -93,12 +94,19 @@ public class TransactionDTO implements Serializable {
             return;
         }
         
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        valor = valor.trim();
         try {
-            this.dataEmissao = LocalDate.parse(valor.toString(), formatter);
+            if(valor.length() == 10){
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                this.dataEmissao = LocalDate.parse(valor, formatter);
+            }else{
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                LocalDateTime dateTime = LocalDateTime.parse(valor, formatter);
+                this.dataEmissao = dateTime.toLocalDate();
+            }
         } catch (DateTimeParseException e) {
             this.dataEmissao = null;
-            throw new IllegalArgumentException("Formato de data inválido. Use dd/MM/yyyy.");
+            //throw new IllegalArgumentException("Formato de data inválido. Use dd/MM/yyyy.");
         }
     }
 
