@@ -32,6 +32,7 @@ const DataTable = () => {
             setPage(response.data);
         } catch (error) {
             console.error("Erro ao buscar transações:", error);
+            setTransactions([]);
         }
     }, [activePage]);
 
@@ -53,11 +54,16 @@ const DataTable = () => {
             setShowModal(true);
         } catch (error) {
             console.error("Erro ao buscar itens da transação:", error);
+            setTransactionItems([]);
         }
     };
 
     const handlePageChange = (index: number) => {
         setActivePage(index);
+    };
+
+    const formatCurrency = (value: number | null | undefined) => {
+        return value !== null && value !== undefined ? `R$ ${value.toFixed(2)}` : 'R$ 0,00';
     };
 
     return (
@@ -78,7 +84,7 @@ const DataTable = () => {
                             <tr key={transaction.id} onClick={() => handleTransactionClick(transaction)} style={{ cursor: 'pointer' }}>
                                 <td>{formatDate(transaction.dataEmissao)}</td>
                                 <td>{transaction.nomeEstabelecimento}</td>
-                                <td>R$ {transaction.valor.toFixed(2)}</td>
+                                <td>{formatCurrency(transaction.valor)}</td>
                                 <td>{transaction.formaPagamento}</td>
                                 <td>{transaction.qtdeTotalItens}</td>
                             </tr>
@@ -102,7 +108,7 @@ const DataTable = () => {
                                     <div className="col-md-6">
                                         <p><strong>Estabelecimento:</strong> {selectedTransaction.nomeEstabelecimento}</p>
                                         <p><strong>Data:</strong> {formatDate(selectedTransaction.dataEmissao)}</p>
-                                        <p><strong>Valor Total:</strong> R$ {selectedTransaction.valor.toFixed(2)}</p>
+                                        <p><strong>Valor Total:</strong> {formatCurrency(selectedTransaction.valor)}</p>
                                         <p><strong>Forma de Pagamento:</strong> {selectedTransaction.formaPagamento}</p>
                                     </div>
                                     <div className="col-md-6">
@@ -128,8 +134,8 @@ const DataTable = () => {
                                                 <tr key={item.id}>
                                                     <td>{item.descricao}</td>
                                                     <td>{item.quantidade} {item.unidade}</td>
-                                                    <td>R$ {item.valorUnitario.toFixed(2)}</td>
-                                                    <td>R$ {item.valorTotal.toFixed(2)}</td>
+                                                    <td>{formatCurrency(item.valorUnitario)}</td>
+                                                    <td>{formatCurrency(item.valorTotal)}</td>
                                                 </tr>
                                             ))}
                                         </tbody>
