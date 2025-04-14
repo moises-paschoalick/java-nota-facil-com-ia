@@ -1,5 +1,5 @@
 // @ts-ignore
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { BASE_URL } from "utils/requests";
 import { Transaction, TransactionItem, TransactionPage } from "types/transactions";
@@ -25,7 +25,7 @@ const DataTable = () => {
         content: []
     });
 
-    const fetchTransactions = async () => {
+    const fetchTransactions = useCallback(async () => {
         try {
             const response = await axios.get(`${BASE_URL}/transactions?page=${activePage}&size=20&sort=dataEmissao,desc`);
             setTransactions(response.data.content);
@@ -33,7 +33,7 @@ const DataTable = () => {
         } catch (error) {
             console.error("Erro ao buscar transações:", error);
         }
-    };
+    }, [activePage]);
 
     useEffect(() => {
         fetchTransactions();
@@ -43,7 +43,7 @@ const DataTable = () => {
         
         // Limpa o intervalo quando o componente é desmontado
         return () => clearInterval(interval);
-    }, [activePage]);
+    }, [fetchTransactions]);
 
     const handleTransactionClick = async (transaction: Transaction) => {
         setSelectedTransaction(transaction);
