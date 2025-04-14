@@ -5,7 +5,7 @@ import { BASE_URL } from 'utils/requests';
 import './styles.css';
 
 const TotalCard = () => {
-    const [total, setTotal] = useState(0);
+    const [total, setTotal] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchTotal = async () => {
@@ -14,6 +14,7 @@ const TotalCard = () => {
                 setTotal(response.data.sum);
             } catch (error) {
                 console.error('Erro ao buscar total:', error);
+                setTotal(null);
             }
         };
 
@@ -26,7 +27,9 @@ const TotalCard = () => {
         <div className="card total-card">
             <div className="card-body">
                 <h5 className="card-title">Total</h5>
-                <h2 className="card-value">R$ {total.toFixed(2)}</h2>
+                <h2 className="card-value">
+                    {total !== null ? `R$ ${total.toFixed(2)}` : 'Carregando...'}
+                </h2>
             </div>
         </div>
     );
