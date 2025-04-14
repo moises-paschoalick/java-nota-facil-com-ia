@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://seu-frontend.netlify.app") // Substitua pelo seu domínio do Netlify
+                .allowedOrigins("https://onnipro.netlify.app") // Substitua pelo seu domínio do Netlify
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
